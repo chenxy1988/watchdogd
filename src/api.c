@@ -164,6 +164,9 @@ int api_init(uev_ctx_t *ctx)
 	if (-1 == bind(sd, (struct sockaddr*)&sun, sizeof(sun)))
 		goto error;
 
+	if (-1 == chmod(sun.sun_path, 0666))
+		PERROR("Failed chmod %s", sun.sun_path);
+
 	if (-1 == listen(sd, 10))
 		goto error;
 
